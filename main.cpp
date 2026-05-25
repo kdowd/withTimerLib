@@ -21,7 +21,7 @@ int getUserChoice()
     2. Unregister
     3. Login
     4. Logout
-    5. Quit
+    5. End Programme
 )" << endl;
    }, 2000);
 

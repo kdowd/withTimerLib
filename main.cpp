@@ -3,25 +3,48 @@
 #include "libs/Timercpp.h"
 
 using namespace std;
-Timer messageTimer = Timer();
 
-void stuff()
+
+int getUserChoice()
 {
-    messageTimer.setInterval([&]() {
-        cout << termcolor::bright_magenta << "Message, one per 1s..." << endl;
+    Timer messageTimer = Timer();
+    bool loop = true;
+    int userNumber = 0;
+
+    messageTimer.setTimeout([&]() {
+        cout << termcolor::bright_magenta << "Please choose from following menu" << endl;
     }, 1000);
 
     messageTimer.setTimeout([&]() {
-        cout << termcolor::bright_red  <<"Kill this timer after 6.4s!" << endl;
+        cout << termcolor::italic << termcolor::yellow << R"(
+    1. Register
+    2. Unregister
+    3. Login
+    4. Logout
+    5. Quit
+)" << endl;
+   }, 2000);
+
+    messageTimer.setTimeout([&]() {
         messageTimer.stop();
-    }, 6400);
+        cout << "Your choice: ";
+        cin >> userNumber;
+        loop = false;
+
+      }, 3000);
+
+    // cant leave function until timeouts are done
+    while(loop == true);
+
+    return userNumber;
 }
 
 
 int main()
 {
-    std::cout << termcolor::bright_cyan << "Hello, World!" << std::endl;
-    stuff();
+    int uc = getUserChoice();
+    cout << "user chose " << termcolor::bright_red << uc << endl;
+
     while(true);
     return 0;
 }
